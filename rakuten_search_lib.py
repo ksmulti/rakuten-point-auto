@@ -1,27 +1,79 @@
 import json
+from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
+import random
+import time
 
-def LoadSettings():
-    with open('settings.json', encoding='utf-8') as json_file:
-        settings = json.load(json_file)
-        return settings
+class RakutenSearchCore:
+    def __init__(self):
+        chop = webdriver.ChromeOptions()
+        chop.add_extension("rakuten_search.crx")
+        self.__browser = webdriver.Chrome(chrome_options=chop)    #open chrome browser
+        self.__delay = 10
+        self.__settings = self.LoadSettings()
+        self.__keywords = self.LoadKeywords()
 
-def LoadKeywords():
-    with open('keywords.json', encoding='utf-8') as json_file:
-        keywords = json.load(json_file)
-        return keywords
+    def LoadSettings(self):
+        with open('settings.json', encoding='utf-8') as json_file:
+            settings = json.load(json_file)
+            return settings
 
-def WaitPageSteady(browser, wait_element_id):
-    delay = 10 # seconds
-    try:
-        myElem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.ID, wait_element_id)))
-        # print("Page is ready!")
-    except TimeoutException:
-        print("Loading took too much time!")
-        exit()
+    def LoadKeywords(self):
+        with open('keywords.json', encoding='utf-8') as json_file:
+            keywords = json.load(json_file)
+            return keywords
 
-def Login():
-    print("Hello from a function")
+    def WaitPageSteady(self, wait_element_id):
+        try:
+            WebDriverWait(self.__browser, self.__delay).until(EC.presence_of_element_located((By.ID, wait_element_id)))
+            # print("Page is ready!")
+        except TimeoutException:
+            print("Loading took too much time!")
+            exit()
+    
+    def Index(self):
+        self.__browser.get("https://websearch.rakuten.co.jp/")
+    
+    def GoLoginPage(self):
+        btn_login = self.__browser.find_element_by_link_text("ログイン")
+        btn_login.click()
+        self.WaitPageSteady('loginInner_u')
+
+    def Login(self):
+        edit_user = self.__browser.find_element_by_id("loginInner_u")
+        edit_password = self.__browser.find_element_by_id("loginInner_p")
+        edit_user.send_keys(self.__settings["account"])
+        edit_password.send_keys(self.__settings["password"])
+
+        btn_login = self.__browser.find_element_by_name("submit")
+        btn_login.click()
+        self.WaitPageSteady('search-input')
+
+    def Search(self):
+        edit_search = self.__browser.find_element_by_id("search-input")
+        edit_search.send_keys(random.choice(self.__keywords['keywords']))
+        btn_search = self.__browser.find_element_by_id("search-submit")
+        btn_search.click()
+        self.WaitPageSteady('srchformtxt_qt')
+
+        while True:
+            time.sleep(2)
+            text_count = self.__browser.find_element_by_class_name("KuchisuBar-module__progressCounter1__1NVVE")
+            #print(text_count.text)
+
+            if int(text_count.text) < 30:
+                edit_search = self.__browser.find_element_by_id("srchformtxt_qt")
+                edit_search.clear()
+                edit_search.send_keys(random.choice(self.__keywords['keywords']))
+                btn_search = self.__browser.find_element_by_id("searchBtn")
+                btn_search.click()
+                self.WaitPageSteady('srchformtxt_qt')
+            else:
+                break
+
+        
+
+        
