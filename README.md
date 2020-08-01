@@ -1,3 +1,3 @@
 # rakuten-search-auto
 
-Test
+Automatically use rakuten search with keywords to get rakuten point
