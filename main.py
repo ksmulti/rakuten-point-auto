@@ -5,3 +5,5 @@ rsc.Index()
 rsc.GoLoginPage()
 rsc.Login()
 rsc.Search()
+
+print("rakuten search end")
