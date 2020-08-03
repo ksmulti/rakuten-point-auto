@@ -11,4 +11,4 @@ Automatically use rakuten search with keywords to get rakuten point
 2. Chrome will be opened, and rakuten search will be done until 30 counts.
 
 ◆Rakuten Kuji
-Run rekuten_kuji.py
+1. Run rekuten_kuji.py
