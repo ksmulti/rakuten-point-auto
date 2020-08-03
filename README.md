@@ -6,5 +6,5 @@ Environment: selenium and python3
 
 Steps:
 1. Write your rakuten account and password to settings.json
-2. Run main.py
+2. Run rekuten_search.py
 3. Chrome will be opened, and rakuten search will be done until 30 counts.
