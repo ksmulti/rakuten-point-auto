@@ -1,10 +1,14 @@
-# rakuten-search-auto
+# rakuten-point-auto
 
 Automatically use rakuten search with keywords to get rakuten point
 
-Environment: selenium and python3
+◆Environment
+1. selenium and python3
+2. Write your rakuten account and password to settings.json
 
-Steps:
-1. Write your rakuten account and password to settings.json
-2. Run rekuten_search.py
-3. Chrome will be opened, and rakuten search will be done until 30 counts.
+◆Rakuten Search
+1. Run rekuten_search.py
+2. Chrome will be opened, and rakuten search will be done until 30 counts.
+
+◆Rakuten Kuji
+1. Run rekuten_kuji.py
