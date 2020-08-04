@@ -10,7 +10,7 @@ import time
 class RakutenSearchCore:
     def __init__(self):
         chop = webdriver.ChromeOptions()
-        chop.add_extension("rakuten_search.crx")
+        chop.add_extension("rakuten_extension.crx")
         self.__browser = webdriver.Chrome(chrome_options=chop)    #open chrome browser
         self.__delay = 10
         self.__settings = self.LoadSettings()
