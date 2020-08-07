@@ -1,6 +1,6 @@
 # rakuten-point-auto
 
-Automatically use rakuten search with keywords to get rakuten point
+Automatically use rakuten service to get rakuten point
 
 ◆Environment
 1. selenium and python3
