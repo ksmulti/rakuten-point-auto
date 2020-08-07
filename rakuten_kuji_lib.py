@@ -31,19 +31,20 @@ class RakutenKujiCore:
         url = "https://www.rakuten.co.jp"
         self.__browser.get(url)
 
-    def WaitPageSteady(self, wait_element_id):
+    def WaitElementSteady(self, element, wait_by = By.ID, is_stop = True):
         try:
-            WebDriverWait(self.__browser, self.__delay).until(EC.presence_of_element_located((By.ID, wait_element_id)))
+            WebDriverWait(self.__browser, self.__delay).until(EC.presence_of_element_located((By.ID, element)))
             # print("Page is ready!")
         except TimeoutException:
-            print("Loading took too much time!")
-            exit()
+            print("WaitElementSteady: Loading took too much time!")
+            if is_stop:
+                exit()
 
     def GoLoginPage(self):
         # 楽天ログインページに移動
         url = "https://grp01.id.rakuten.co.jp/rms/nid/vc?__event=login&service_id=top"
         self.__browser.get(url)
-        self.WaitPageSteady('loginInner_u')
+        self.WaitElementSteady('loginInner_u')
     
     def Login(self):
         # 楽天にログイン
@@ -54,12 +55,13 @@ class RakutenKujiCore:
 
         btn_login = self.__browser.find_element_by_name("submit")
         btn_login.click()
-        self.WaitPageSteady('sitem')
+        self.WaitElementSteady('sitem')
 
     def OpenRakutenLuckyKuji(self, URL):
         try:
             self.__browser.get(URL) # 楽天くじURLを開く
-            time.sleep(5)
+            #time.sleep(5)
+            self.WaitElementSteady("//*[@id='entry']", By.XPATH, False)
             self.__browser.find_element_by_xpath("//*[@id='entry']").click() # Startボタン
             time.sleep(20) # ルーレットくじの待ち時間
         except NoSuchElementException:
