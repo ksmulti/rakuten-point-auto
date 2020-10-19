@@ -4,6 +4,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
 import random
 import time
 
@@ -11,7 +13,7 @@ class RakutenSearchCore:
     def __init__(self):
         chop = webdriver.ChromeOptions()
         chop.add_extension("rakuten_extension.crx")
-        self.__browser = webdriver.Chrome(chrome_options=chop)    #open chrome browser
+        self.__browser = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chop)    #open chrome browser
         self.__delay = 10
         self.__settings = self.LoadSettings()
         self.__keywords = self.LoadKeywords()
@@ -36,11 +38,17 @@ class RakutenSearchCore:
     
     def Index(self):
         self.__browser.get("https://websearch.rakuten.co.jp/")
+        print("Loading index OK!")
+
+    def Quit(self):
+        self.__browser.quit()
+        print("Browser quit")
     
     def GoLoginPage(self):
         btn_login = self.__browser.find_element_by_link_text("ログイン")
         btn_login.click()
         self.WaitPageSteady('loginInner_u')
+        print("GoLoginPage OK!")
 
     def Login(self):
         edit_user = self.__browser.find_element_by_id("loginInner_u")
@@ -51,6 +59,7 @@ class RakutenSearchCore:
         btn_login = self.__browser.find_element_by_name("submit")
         btn_login.click()
         self.WaitPageSteady('search-input')
+        print("Login OK!")
 
     def Search(self):
         edit_search = self.__browser.find_element_by_id("search-input")
@@ -65,6 +74,7 @@ class RakutenSearchCore:
             #print(text_count.text)
 
             if int(text_count.text) < 30:
+                print("Search" + text_count.text)
                 edit_search = self.__browser.find_element_by_id("srchformtxt_qt")
                 edit_search.clear()
                 edit_search.send_keys(random.choice(self.__keywords['keywords']))

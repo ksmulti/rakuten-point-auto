@@ -44,6 +44,10 @@ class RakutenSearchCore:
     def Index(self):
         self.__browser.get("https://websearch.rakuten.co.jp/")
         print("Loading index OK!")
+
+    def Quit(self):
+        self.__browser.quit()
+        print("Browser quit")
     
     def GoLoginPage(self):
         btn_login = self.__browser.find_element_by_link_text("ログイン")
@@ -75,6 +79,7 @@ class RakutenSearchCore:
             #print(text_count.text)
 
             if int(text_count.text) < 30:
+                print("Search" + text_count.text)
                 edit_search = self.__browser.find_element_by_id("srchformtxt_qt")
                 edit_search.clear()
                 edit_search.send_keys(random.choice(self.__keywords['keywords']))
