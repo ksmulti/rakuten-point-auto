@@ -37,7 +37,8 @@ class RakutenSearchCore:
             exit()
     
     def Index(self):
-        self.__browser.get("https://websearch.rakuten.co.jp/")
+        self.__browser.get("https://grp03.id.rakuten.co.jp/rms/nid/login?service_id=r12&return_url=login?tool_id=1&tp=&id=")
+        self.WaitPageSteady('loginInner_u')
         print("Loading index OK!")
 
     def Quit(self):
