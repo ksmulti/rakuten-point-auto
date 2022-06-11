@@ -15,6 +15,11 @@ class RakutenSearchCore(CommonCore):
         self._name = __name__
         CommonCore.__init__(self)
         self._keywords = self.LoadKeywords()
+        
+        if self._settings["account"] == "":
+            print("account is empty!!")
+        if self._settings["password"] == "":
+            print("password is empty!!")
 
         self.SwitchToPopupWindow()
         self._browser.close()
