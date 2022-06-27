@@ -48,7 +48,7 @@ class RakutenKujiCore(CommonCore):
         # 楽天ログインページに移動
         url = "https://grp01.id.rakuten.co.jp/rms/nid/vc?__event=login&service_id=top"
         self._browser.get(url)
-        self.WaitElementSteady('loginInner_u')
+        self.WaitPageSteady('loginInner_u')
     
     def Login(self):
         # 楽天にログイン
@@ -59,13 +59,13 @@ class RakutenKujiCore(CommonCore):
 
         btn_login = self._browser.find_element_by_name("submit")
         btn_login.click()
-        self.WaitElementSteady('common-header-search-input')
+        self.WaitPageSteady('common-header-search-input')
 
     def OpenRakutenLuckyKuji(self, URL):
         try:
             self._browser.get(URL) # 楽天くじURLを開く
             #time.sleep(5)
-            self.WaitElementSteady("//*[@id='entry']", By.XPATH, False)
+            self.WaitPageSteady("//*[@id='entry']", By.XPATH, False)
             self._browser.find_element_by_xpath("//*[@id='entry']").click() # Startボタン
             time.sleep(20) # ルーレットくじの待ち時間
         except NoSuchElementException:
