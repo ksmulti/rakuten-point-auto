@@ -1,0 +1,2 @@
+0 2 * * * cd /home/ubuntu/projects/rakuten-point-auto && sh /home/ubuntu/projects/rakuten-point-auto/startup.sh >> /home/ubuntu/projects/logs/rakuten_search.log 2>&1
+0 13 * * * cd /home/ubuntu/projects/rakuten-point-keiba && sh /home/ubuntu/projects/rakuten-point-keiba/startup.sh >> /home/ubuntu/projects/logs/eshinbun.log 2>&1
