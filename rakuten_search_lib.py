@@ -61,7 +61,7 @@ class RakutenSearchCore(CommonCore):
 
         while True:
             time.sleep(2)
-            text_count = self._browser.find_element_by_class_name("KuchisuBar-module__progressCounter1__1NVVE")
+            text_count = self._browser.find_element_by_class_name("progressCounter1")
             print("Count Now: " + text_count.text)
 
             if int(text_count.text) < 30:
